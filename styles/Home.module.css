@@ -194,9 +194,9 @@
     margin-bottom: 0.5rem;
   }
 
-  .center {
+  /* .center {
     padding: 8rem 0 6rem;
-  }
+  } */
 
   .center::before {
     transform: none;
