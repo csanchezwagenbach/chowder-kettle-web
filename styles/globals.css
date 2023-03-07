@@ -21,15 +21,6 @@ body {
   align-items: center;
 }
 
-main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 83.3vh;
-  width: 72.3vw;
-}
-
 .navbar {
   height: 83.3vh;
   width: 27.7vw;
