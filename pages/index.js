@@ -1,11 +1,17 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Cedarville_Cursive } from 'next/font/google';
-import styles from '@/styles/Home.module.css';
+import homeStyles from '../styles/Home.module.css';
+import ClamDigger from '../components/ClamDigger';
+import { firestore } from '../lib/firebase';
 
 const cursive = Cedarville_Cursive({ weight: ['400'], subsets: ['latin']});
+const userQuery = firestore.collection('users');
 
-export default function Home() {
+const user = (await userQuery.get()).docs
+
+export default async function Home(user) {
+
+ 
   return (
     <>
       <Head>
@@ -15,11 +21,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
-      <main className={styles.main}>
+      <main className={homeStyles.main}>
        
         
         <h1 className={cursive.className}>You should have been with us that day . . .</h1>
 
+        <ClamDigger user={user} />
         
       </main>
     </>

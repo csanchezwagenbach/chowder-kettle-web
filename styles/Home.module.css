@@ -1,8 +1,8 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 83.3vh;
   width: 72.3vw;
   font-size: 3.2vw;
@@ -13,10 +13,4 @@
   margin-top: 20px;
   margin-bottom: 0;
   line-height: 100px;
-}
-
-
-
-
-
-
+} 
