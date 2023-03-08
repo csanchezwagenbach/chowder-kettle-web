@@ -1,5 +1,6 @@
 import { auth, db } from '../lib/firebase';
-import { RecaptchaVerifier } from 'firebase/auth';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Login(props) {
@@ -36,22 +37,35 @@ export default function Login(props) {
         const [confirmationResult, setConfirmationResult] = useState(null);
         const [code, setCode] = useState('');
     
-        const phoneNumber = `+{digits}`;
+        const phoneNumber = `+${digits}`;
     
+        const checkConnection = async () => {
+            const ref = doc(db, 'invites', phoneNumber);
+            console.log(db);
+            console.log(phoneNumber)
+            const snap = await getDoc(ref);
+            if (snap.exists()) {
+                console.log(snap.data())
+                setInvited(true)
+                console.log(invited);
+            }
+        }
+
         // Verify Invite
         useEffect(() => {
             if (phoneNumber.length === 12) {
-                const ref = db.collection('invites').doc(phoneNumber);
-                ref.get().then(({ exists }) => { setInvited(exists) });
+                checkConnection();            
             } else {
-                setInvited(false);
+                setInvited(false)
             }
         }, [phoneNumber]);
     
-        // Sign In
-        const signInWithPhoneNumber = async () => {
-            setConfirmationResult(await auth.signInWithPhoneNumber(phoneNumber, recaptcha));
-        };
+        
+       
+        const sendText = async () => {
+            const text = await signInWithPhoneNumber(auth, phoneNumber, recaptcha);
+            console.log(text);
+        }
     
         // Verify SMS code
         const verifyCode = async () => {
@@ -67,14 +81,14 @@ export default function Login(props) {
                     <br />
                     <input value={digits} onChange={(e) => setDigits(e.target.value)} />
     
-                    <button onClick={signInWithPhoneNumber}>
+                    <button onClick={sendText}>
                         Sign In
                     </button>
                 </fieldset>
     
-                {confirmationResult && (
+                {invited  && (
                     <fieldset>
-                        <label>erify code</label>
+                        <label>Verify code</label>
                         <br />
                         <input value={code} onChange={(e) => setCode(e.target.value)} />
     
