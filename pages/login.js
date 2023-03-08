@@ -1,4 +1,5 @@
-import { auth, firestore } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
+import { RecaptchaVerifier } from 'firebase/auth';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Login(props) {
@@ -10,9 +11,11 @@ export default function Login(props) {
         useEffect(() => {
             if (!recaptcha) {
     
-                const verifier = new firebase.auth.RecaptchaVerifier(element.current, {
+                const verifier = new RecaptchaVerifier(element.current, {
                     size: 'invisible',
-                })
+                }, auth)
+
+               
     
                 verifier.verify().then(() => setRecaptcha(verifier));
     
@@ -38,7 +41,7 @@ export default function Login(props) {
         // Verify Invite
         useEffect(() => {
             if (phoneNumber.length === 12) {
-                const ref = firestore.collection('invites').doc(phoneNumber);
+                const ref = db.collection('invites').doc(phoneNumber);
                 ref.get().then(({ exists }) => { setInvited(exists) });
             } else {
                 setInvited(false);
