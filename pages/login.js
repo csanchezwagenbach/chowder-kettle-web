@@ -47,7 +47,6 @@ export default function Login(props) {
             if (snap.exists()) {
                 console.log(snap.data())
                 setInvited(true)
-                console.log(invited);
             }
         }
 
@@ -63,8 +62,8 @@ export default function Login(props) {
         
        
         const sendText = async () => {
-            const text = await signInWithPhoneNumber(auth, phoneNumber, recaptcha);
-            console.log(text);
+            const text = await signInWithPhoneNumber(auth, phoneNumber, recaptcha).catch((error) => {console.log(error)});
+            setConfirmationResult(text);
         }
     
         // Verify SMS code
@@ -81,7 +80,7 @@ export default function Login(props) {
                     <br />
                     <input value={digits} onChange={(e) => setDigits(e.target.value)} />
     
-                    <button onClick={sendText}>
+                    <button onClick={() => sendText()}>
                         Sign In
                     </button>
                 </fieldset>
