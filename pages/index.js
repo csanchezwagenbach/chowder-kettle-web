@@ -9,6 +9,7 @@ import AuthCheck from '../components/AuthCheck';
 
 const cursive = Cedarville_Cursive({ weight: ['400'], subsets: ['latin']});
 
+
 const allUsers = [];
 
 const fetchUsers = async () => {
