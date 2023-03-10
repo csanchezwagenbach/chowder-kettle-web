@@ -8,17 +8,21 @@ import ClamDigger from '../components/ClamDigger';
 
 const cursive = Cedarville_Cursive({ weight: ['400'], subsets: ['latin']});
 
-export default function Home({user}) {
+const allUsers = [];
 
-  const [users, setUsers] = useState([])
+const fetchUsers = async () => {
+  const querySnapshot = await getDocs(collection(db, 'users'));
+  querySnapshot.forEach((user) => allUsers.push(user.data()))
+}
 
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     const querySnapshot = await getDocs(collection(db, 'users'));
-  //     querySnapshot.forEach((user) => console.log(user))
-  //   }
-  //   fetchUsers();
-  // }, [])
+fetchUsers();
+console.log(allUsers);
+
+export default function Home() {
+
+  const [users, setUsers] = useState(allUsers)
+
+  console.log(users)
  
   return (
     <>
@@ -35,8 +39,7 @@ export default function Home({user}) {
         
         <h1 className={cursive.className}>You should have been with us that day . . .</h1>
 
-        <ClamDigger user={user} />
-        
+        {users.map(user => {return <ClamDigger key={user.uid} user={user} />})}      
       </main>
     </>
   )
