@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import { Cedarville_Cursive } from 'next/font/google';
 import { db } from '../lib/firebase';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import homeStyles from '../styles/Home.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ClamDigger from '../components/ClamDigger';
+import AuthCheck from '../components/AuthCheck';
 
 const cursive = Cedarville_Cursive({ weight: ['400'], subsets: ['latin']});
 
@@ -32,6 +33,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <AuthCheck>
     
     
       <main className={homeStyles.main}>
@@ -41,6 +44,8 @@ export default function Home() {
 
         {users.map(user => {return <ClamDigger key={user.uid} user={user} />})}      
       </main>
+
+      </AuthCheck>
     </>
   )
 }
