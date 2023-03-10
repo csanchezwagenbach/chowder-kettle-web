@@ -1,4 +1,4 @@
-export default function ClamDigger( user ) {
+export default function ClamDigger(user) {
     return (
         <div>
             <div>
