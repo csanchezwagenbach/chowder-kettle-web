@@ -1,0 +1,23 @@
+.face {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 8.3vh;
+    width: 55.6vw;
+    margin-top: 10px;
+}
+
+.name {
+    margin: 0;
+}
+
+.avatar {
+    border-radius: 9999px;
+    object-fit: scale-down;
+    margin-right: 10px;
+}
+
+.status {
+    margin: 0;
+}
+

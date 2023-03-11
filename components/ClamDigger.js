@@ -2,6 +2,7 @@ import { Arsenal } from 'next/font/google';
 import { storage } from '../lib/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { useState, useEffect } from 'react';
+import styles from '../styles/ClamDigger.module.css';
 
 const font = Arsenal({ weight: ['400'], subsets: ['latin']})
 
@@ -21,13 +22,13 @@ export default function ClamDigger({user}) {
     })
 
     return (
-        <div>
-            <div>
-                <h5 className={font.className}>{user.name}</h5>
-                <img src={avatar}></img>
+        <div className={font.className}>
+            <div className={styles.face}>
+                <h5 className={styles.name}>{user.name}</h5>
+                <img className={styles.avatar} src={avatar}></img>
             </div>
             <div>
-                <p className={font.className}>{user.status} in {user.home_location}</p>
+                <p className={styles.status}>{user.status} in {user.home_location}</p>
             </div>
         </div>
     );
