@@ -43,7 +43,7 @@ export default function Home() {
         
         <h1 className={cursive.className}>You should have been with us that day . . .</h1>
 
-        {users.map(user => {return <ClamDigger key={user.uid} user={user} />})}      
+        {users.map(user => {return <ClamDigger user={user} />})}      
       </main>
 
       </AuthCheck>

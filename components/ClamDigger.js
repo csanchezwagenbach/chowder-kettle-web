@@ -22,7 +22,7 @@ export default function ClamDigger({user}) {
     })
 
     return (
-        <div className={font.className}>
+        <div key={user.name} className={font.className}>
             <div className={styles.face}>
                 <h5 className={styles.name}>{user.name}</h5>
                 <img className={styles.avatar} src={avatar}></img>
