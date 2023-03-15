@@ -1,0 +1,10 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 83.3vh;
+    width: 72.3vw;
+    font-size: 3.2vw;
+    overflow-y: auto;
+  }
