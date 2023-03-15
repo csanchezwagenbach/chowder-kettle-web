@@ -9,8 +9,9 @@ import { useState, useEffect } from 'react';
 export default function Yawp() {
 
     const fetchDelivery = async () => {
-        const today = Timestamp.now();
-        console.log(today);
+        const querySnapshot = await getDocs 
+        // Query Posts that come from the time between last midnight and NOW
+        //So I want a way to grab the timestamp that was last midnight, and I'll use that as the parameter in a WHERE addition to the query
     }
     fetchDelivery();
 
@@ -20,7 +21,7 @@ export default function Yawp() {
     return (
         <AuthCheck>
             <main className={styles.main}>
-                {deliveries ? deliveries.map((delivery) => <DaysDelivery delivery={delivery} key={delivery} />) : <p>Nothing yet posted</p>}
+                {deliveries ? deliveries.map((delivery) => <DaysDelivery delivery={delivery} key={delivery.date} />) : <p>Nothing yet posted</p>}
             </main>
         </AuthCheck>
     );
