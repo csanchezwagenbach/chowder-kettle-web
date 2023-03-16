@@ -1,38 +1,54 @@
 import AuthCheck from "../../components/AuthCheck";
 import styles from '../../styles/Yawp.module.css';
 import { db, postToJSON } from '../../lib/firebase';
-import { collection, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, Timestamp, query, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
 
 
 export default function Yawp() {
+    let today;
+    let timestamp;
+    let todaysDelivery = [];
+
+    function getStartOfToday() {
+        today = new Date();
+        today.setHours(8, 0, 0, 0);
+        timestamp = Timestamp.fromDate(today);
+        console.log(timestamp)
+        return timestamp
+    }
 
     const fetchDelivery = async () => {
-        const querySnapshot = await getDocs 
-        // Query Posts that come from the time between last midnight and NOW
-        //So I want a way to grab the timestamp that was last midnight, and I'll use that as the parameter in a WHERE addition to the query
+        const q = query(collection(db, 'notes'), where('createdAt', '>', timestamp));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((note) => {
+            console.log(note.data());
+             todaysDelivery.push(note.data())
+            })
+            console.log(todaysDelivery)
     }
+    getStartOfToday();
     fetchDelivery();
 
-    const [deliveries, setDeliveries] = useState()
+    const [deliveries, setDeliveries] = useState(todaysDelivery);
 
 
     return (
         <AuthCheck>
             <main className={styles.main}>
-                {deliveries ? deliveries.map((delivery) => <DaysDelivery delivery={delivery} key={delivery.date} />) : <p>Nothing yet posted</p>}
+                <DaysDelivery delivery={deliveries} key={deliveries.date} />
             </main>
         </AuthCheck>
     );
 }
 
-function DaysDelivery({ delivery }) {
+function DaysDelivery({delivery}) {
     return (
         <div className="satchel">
             <p>DATE HERE</p>
             <div className="bundle">
-                {delivery ? delivery.map((note) => <PostedNote note={note} key={note} />) : null}
+                {delivery ? delivery.map((note) => <PostedNote note={note} key={note} />) : <PostedNote note={note} key={note} />}
             </div>
         </div>
     );
